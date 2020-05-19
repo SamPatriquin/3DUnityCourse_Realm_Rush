@@ -15,7 +15,7 @@ public class CubeEditor : MonoBehaviour {
     void Update()
     {
         TextMesh textMesh = GetComponentInChildren<TextMesh>();
-        Vector3 snapPos;
+        Vector3 snapPos = new Vector3();
         snapPos.x = Mathf.RoundToInt(transform.position.x / gridSnap) * gridSnap;
         snapPos.z = Mathf.RoundToInt(transform.position.z / gridSnap) * gridSnap;
         snapPos.y = 0f;
