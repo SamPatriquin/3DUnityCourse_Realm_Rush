@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    const int gridSize = 12;
+    Vector2Int gridPos;
+    void Start() {
         
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
+    }
+
+    public int getGridSize() {
+        return gridSize;
+    }
+
+    public Vector2Int getGridPos() {
+        return new Vector2Int(
+                Mathf.RoundToInt(transform.position.x / gridSize) * gridSize,
+                Mathf.RoundToInt(transform.position.z / gridSize) * gridSize
+            );
     }
 }

@@ -3,25 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
+[RequireComponent(typeof(Cube))]
 public class CubeEditor : MonoBehaviour {
-    [SerializeField][Range(0, 20)] float gridSnap = 10f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    Cube cube;
+
+    private void Awake() {
+        cube = GetComponent<Cube>();
+    }
+    void Update() {
+
+        snapToGrid();
+        updateLabel();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        TextMesh textMesh = GetComponentInChildren<TextMesh>();
-        Vector3 snapPos = new Vector3();
-        snapPos.x = Mathf.RoundToInt(transform.position.x / gridSnap) * gridSnap;
-        snapPos.z = Mathf.RoundToInt(transform.position.z / gridSnap) * gridSnap;
-        snapPos.y = 0f;
+    private void snapToGrid() {
+        Vector2Int gridPos = cube.getGridPos();
+        int gridSize = cube.getGridSize();
+        transform.position = new Vector3(gridPos.x, 0f, gridPos.y);
+    }
 
-        transform.position = snapPos;
-        string label = snapPos.x / gridSnap + "," + snapPos.z / gridSnap;
+    private void updateLabel() {
+        TextMesh textMesh = GetComponentInChildren<TextMesh>();
+        int gridSize = cube.getGridSize();
+        Vector2Int gridPos = cube.getGridPos();
+        string label = gridPos.x / gridSize + "," + gridPos.y / gridSize;
         textMesh.text = label;
         gameObject.name = label;
     }
