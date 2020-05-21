@@ -22,7 +22,7 @@ public class PathFinder : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        checkTiles();
+        checkCubes();
     }
 
     private void loadBlocks() {
@@ -37,10 +37,11 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-    private void checkTiles() {
+    private void checkCubes() {
         foreach (Vector2Int direction in directions) {
             Vector2Int searchLocation = start.getGridPos() + direction;
-            if (grid.ContainsKey(searchLocation)) { grid[searchLocation].setColor(Color.blue); }
+            try { grid[searchLocation].setColor(Color.blue); }
+            catch { } // Do nothing
         }
     }
 }
