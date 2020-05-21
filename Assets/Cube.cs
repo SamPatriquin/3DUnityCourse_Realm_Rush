@@ -21,8 +21,12 @@ public class Cube : MonoBehaviour
 
     public Vector2Int getGridPos() {
         return new Vector2Int(
-                Mathf.RoundToInt(transform.position.x / gridSize) * gridSize,
-                Mathf.RoundToInt(transform.position.z / gridSize) * gridSize
+                Mathf.RoundToInt(transform.position.x / gridSize),
+                Mathf.RoundToInt(transform.position.z / gridSize)
             );
+    }
+
+    public void setColor(Color color) {
+        transform.Find("Top").GetComponent<MeshRenderer>().material.color = color;
     }
 }

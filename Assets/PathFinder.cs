@@ -5,8 +5,11 @@ using UnityEngine;
 public class PathFinder : MonoBehaviour
 {
     Dictionary<Vector2Int, Cube> grid = new Dictionary<Vector2Int, Cube>();
+    [SerializeField] Cube start, end;
     void Start() {
         loadBlocks();
+        start.setColor(Color.green);
+        end.setColor(Color.red);
     }
 
     // Update is called once per frame

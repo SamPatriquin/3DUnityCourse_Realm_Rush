@@ -19,14 +19,14 @@ public class CubeEditor : MonoBehaviour {
     private void snapToGrid() {
         Vector2Int gridPos = cube.getGridPos();
         int gridSize = cube.getGridSize();
-        transform.position = new Vector3(gridPos.x, 0f, gridPos.y);
+        transform.position = new Vector3(gridPos.x * gridSize , 0f, gridPos.y * gridSize);
     }
 
     private void updateLabel() {
         TextMesh textMesh = GetComponentInChildren<TextMesh>();
         int gridSize = cube.getGridSize();
         Vector2Int gridPos = cube.getGridPos();
-        string label = gridPos.x / gridSize + "," + gridPos.y / gridSize;
+        string label = gridPos.x  + "," + gridPos.y;
         textMesh.text = label;
         gameObject.name = label;
     }
