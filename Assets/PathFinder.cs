@@ -7,24 +7,18 @@ public class PathFinder : MonoBehaviour
     // Data structures;
     Dictionary<Vector2Int, Cube> grid = new Dictionary<Vector2Int, Cube>();
     Queue<Cube> queue = new Queue<Cube>();
+    List<Cube> path = new List<Cube>();
 
     //States
     bool isRunning = true;
     [SerializeField] Cube start, end;
 
-    Vector2Int[] directions = { // Direction array
+    Vector2Int[] directions = { 
         Vector2Int.up,
         Vector2Int.right,
         Vector2Int.down,
         Vector2Int.left
     };
-
-    void Start() {
-        loadBlocks();
-        start.setColor(Color.green);
-        end.setColor(Color.red);
-        pathFind();
-    }
 
     private void loadBlocks() {
         var cubes = FindObjectsOfType<Cube>();
@@ -37,24 +31,25 @@ public class PathFinder : MonoBehaviour
             }
         }
     }
-
+   
     private void checkNeighbors(Cube from) {
-        if (isRunning == false) { return; }
+        if (!isRunning) { return; }
         foreach (Vector2Int direction in directions) {
             Vector2Int searchLocation = from.getGridPos() + direction;
-            try {
+            if (grid.ContainsKey(searchLocation)) {
                 Cube neighbor = grid[searchLocation];
-                if (neighbor.isExplored == false) {
+                if (neighbor.isExplored || queue.Contains(neighbor)) { } // do nothing
+                else {
                     queue.Enqueue(neighbor);
-                    neighbor.setColor(Color.blue);
                     neighbor.isExplored = true;
-                    print("explored " + searchLocation);
+                    neighbor.exploredFrom = from;
+                    //print("explored " + searchLocation);
                 }
-            } catch { } // Do nothing
+            }
         }
     }
 
-    private void pathFind() {
+    private void breatdhFirstSearch() {
         queue.Enqueue(start);
         while (queue.Count > 0 && isRunning) {
             Cube searchCenter = queue.Dequeue();
@@ -62,5 +57,22 @@ public class PathFinder : MonoBehaviour
             searchCenter.isExplored = true;
             checkNeighbors(searchCenter);
         }
+    }
+
+    private void createPath(){
+        path.Add(end);
+        Cube previous = end.exploredFrom;
+        while (previous != start) {
+            path.Add(previous);
+            previous = previous.exploredFrom;
+        }
+        path.Reverse();
+    }
+
+    public List<Cube> getPath() {
+        loadBlocks();
+        breatdhFirstSearch();
+        createPath();
+        return path;
     }
 }

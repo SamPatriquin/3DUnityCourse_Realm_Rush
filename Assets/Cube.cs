@@ -7,14 +7,7 @@ public class Cube : MonoBehaviour
     const int gridSize = 12;
     Vector2Int gridPos;
     public bool isExplored = false;
-    void Start() {
-        
-    }
-
-    // Update is called once per frame
-    void Update() {
-        
-    }
+    public Cube exploredFrom;
 
     public int getGridSize() {
         return gridSize;
