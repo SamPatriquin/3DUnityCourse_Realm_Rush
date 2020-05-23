@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PathFinder : MonoBehaviour
 {
+    // Data structures;
     Dictionary<Vector2Int, Cube> grid = new Dictionary<Vector2Int, Cube>();
+    Queue<Cube> queue = new Queue<Cube>();
+
+    //States
+    bool isRunning = true;
     [SerializeField] Cube start, end;
 
     Vector2Int[] directions = { // Direction array
@@ -18,11 +23,7 @@ public class PathFinder : MonoBehaviour
         loadBlocks();
         start.setColor(Color.green);
         end.setColor(Color.red);
-    }
-
-    // Update is called once per frame
-    void Update() {
-        checkCubes();
+        pathFind();
     }
 
     private void loadBlocks() {
@@ -37,11 +38,29 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-    private void checkCubes() {
+    private void checkNeighbors(Cube from) {
+        if (isRunning == false) { return; }
         foreach (Vector2Int direction in directions) {
-            Vector2Int searchLocation = start.getGridPos() + direction;
-            try { grid[searchLocation].setColor(Color.blue); }
-            catch { } // Do nothing
+            Vector2Int searchLocation = from.getGridPos() + direction;
+            try {
+                Cube neighbor = grid[searchLocation];
+                if (neighbor.isExplored == false) {
+                    queue.Enqueue(neighbor);
+                    neighbor.setColor(Color.blue);
+                    neighbor.isExplored = true;
+                    print("explored " + searchLocation);
+                }
+            } catch { } // Do nothing
+        }
+    }
+
+    private void pathFind() {
+        queue.Enqueue(start);
+        while (queue.Count > 0 && isRunning) {
+            Cube searchCenter = queue.Dequeue();
+            if (searchCenter == end) { isRunning = false; }
+            searchCenter.isExplored = true;
+            checkNeighbors(searchCenter);
         }
     }
 }
