@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    [SerializeField] int hitPoints = 5;
+    void Start() {
         
     }
 
     private void OnParticleCollision(GameObject other) {
-        print("I'm hit");
+        --hitPoints;
+        if (hitPoints <= 0) {
+            Destroy(gameObject);
+        }
     }
+
 }

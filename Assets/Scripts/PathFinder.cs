@@ -70,9 +70,11 @@ public class PathFinder : MonoBehaviour
     }
 
     public List<Cube> getPath() {
-        loadBlocks();
-        breatdhFirstSearch();
-        createPath();
+        if (path.Count == 0) {
+            loadBlocks();
+            breatdhFirstSearch();
+            createPath();
+        }
         return path;
     }
 }
