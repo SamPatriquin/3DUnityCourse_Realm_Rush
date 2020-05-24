@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    const int gridSize = 12;
+    const int gridSize = 10;
     Vector2Int gridPos;
     public bool isExplored = false;
     public Cube exploredFrom;
