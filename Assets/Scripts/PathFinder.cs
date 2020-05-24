@@ -61,11 +61,15 @@ public class PathFinder : MonoBehaviour
 
     private void createPath(){
         path.Add(end);
+        end.isPlacable = false;
         Cube previous = end.exploredFrom;
         while (previous != start) {
             path.Add(previous);
+            previous.isPlacable = false;
             previous = previous.exploredFrom;
         }
+        path.Add(start);
+        start.isPlacable = false;
         path.Reverse();
     }
 

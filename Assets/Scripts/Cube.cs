@@ -6,7 +6,9 @@ public class Cube : MonoBehaviour
 {
     const int gridSize = 10;
     Vector2Int gridPos;
+    [SerializeField] GameObject towerPrefab;
     public bool isExplored = false;
+    public bool isPlacable = true;
     public Cube exploredFrom;
 
     public int getGridSize() {
@@ -22,5 +24,13 @@ public class Cube : MonoBehaviour
 
     public void setColor(Color color) {
         transform.Find("Top").GetComponent<MeshRenderer>().material.color = color;
+    }
+
+    private void OnMouseOver() {
+        if (Input.GetMouseButtonDown(0) && isPlacable) { // Left click
+            isPlacable = false;
+            Vector3 placement = new Vector3(transform.position.x, transform.position.y + 5, transform.position.z);
+            var towerPlaced = Instantiate(towerPrefab, placement, Quaternion.identity);
+        }
     }
 }
