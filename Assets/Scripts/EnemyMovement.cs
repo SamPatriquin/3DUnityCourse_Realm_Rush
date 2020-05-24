@@ -17,7 +17,7 @@ public class EnemyMovement : MonoBehaviour
 
     IEnumerator followPath(List<Cube> path) {
         foreach (Cube cube in path) {
-            transform.position = cube.transform.position;
+            transform.position = new Vector3(cube.transform.position.x, transform.position.y, cube.transform.position.z);
             yield return new WaitForSeconds(1f);
         }
     }
