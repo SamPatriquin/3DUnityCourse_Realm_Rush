@@ -9,6 +9,8 @@ public class Tower : MonoBehaviour
     [SerializeField] float attackRange = 30f;
     [SerializeField] ParticleSystem projectileParticle;
 
+    public Cube baseCube;
+
     //State
     Transform targetEnemy;
     // Start is called before the first frame update
