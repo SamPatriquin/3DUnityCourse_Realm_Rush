@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [SerializeField] float movementSpeed = .5f;
+
     List<Cube> path;
+
     void Start() {
         List<Cube>path = FindObjectOfType<PathFinder>().getPath();
         StartCoroutine(followPath(path));
@@ -18,8 +21,9 @@ public class EnemyMovement : MonoBehaviour
     IEnumerator followPath(List<Cube> path) {
         foreach (Cube cube in path) {
             transform.position = new Vector3(cube.transform.position.x, transform.position.y, cube.transform.position.z);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(movementSpeed);
         }
+        Destroy(gameObject);
     }
 }
 
