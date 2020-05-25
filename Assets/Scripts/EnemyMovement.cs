@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] float movementSpeed = .5f;
+    [SerializeField] float movementSpeed = 1f;
 
     List<Cube> path;
 
